@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <title>หน้าหลัก 💖</title>
+  <style>
+    body {
+      font-family: "Arial", sans-serif;
+      background: linear-gradient(135deg, #ffe6f2, #ffd9e8);
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      overflow: hidden;
+      color: #333;
+    }
+
+    .container {
+      background: rgba(255,255,255,0.25);
+      backdrop-filter: blur(15px);
+      border-radius: 25px;
+      padding: 30px 40px;
+      text-align: center;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+      width: 400px;
+      position: relative;
+    }
+
+    h1 {
+      font-size: 1.8em;
+      margin-bottom: 15px;
+    }
+
+    #timeDisplay {
+      font-size: 1.2em;
+      margin-bottom: 20px;
+      font-weight: bold;
+    }
+
+    .photo-gallery {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+
+    .photo-gallery img {
+      width: 90px;
+      height: 90px;
+      object-fit: cover;
+      border-radius: 15px;
+      box-shadow: 0 3px 10px rgba(0,0,0,0.2);
+      transition: transform 0.3s;
+    }
+
+    .photo-gallery img:hover {
+      transform: scale(1.05);
+    }
+
+    button {
+      padding: 10px 20px;
+      font-size: 1.1em;
+      border: none;
+      border-radius: 25px;
+      background: #ff69b4;
+      color: white;
+      cursor: pointer;
+      transition: transform 0.2s;
+    }
+
+    button:hover {
+      transform: scale(1.1);
+      background: #ff85c1;
+    }
+
+    .heart, .flower {
+      position: fixed;
+      top: -50px;
+      font-size: 24px;
+      pointer-events: none;
+      animation: fall linear forwards;
+    }
+
+    @keyframes fall {
+      to {
+        transform: translateY(110vh) rotate(360deg);
+        opacity: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h1>เราคบกัน 💕</h1>
+    <div id="timeDisplay">กำลังโหลด...</div>
+
+    <div class="photo-gallery">
+      <img src="photo1.jpg" alt="รูปความทรงจำ 1">
+      <img src="photo2.jpg" alt="รูปความทรงจำ 2">
+      <img src="photo3.jpg" alt="รูปความทรงจำ 3">
+    </div>
+
+    <button onclick="goTimeline()">ไปดูไทม์ไลน์ของเรา</button>
+  </div>
+
+  <script>
+    // คำนวณเวลาที่คบกัน
+    const startDate = new Date("2022-09-09T00:00:00");
+    const timeDisplay = document.getElementById("timeDisplay");
+
+    function updateTime() {
+      const now = new Date();
+      let diff = now - startDate;
+
+      let seconds = Math.floor(diff / 1000);
+      let minutes = Math.floor(seconds / 60);
+      let hours = Math.floor(minutes / 60);
+      let days = Math.floor(hours / 24);
+
+      const years = Math.floor(days / 365);
+      const months = Math.floor((days % 365) / 30);
+      const remDays = days - years*365 - months*30;
+      const remHours = hours % 24;
+      const remMinutes = minutes % 60;
+      const remSeconds = seconds % 60;
+
+      timeDisplay.textContent = 
+        `${years} ปี ${months} เดือน ${remDays} วัน ` +
+        `${remHours} ชั่วโมง ${remMinutes} นาที ${remSeconds} วินาที`;
+    }
+
+    setInterval(updateTime, 1000);
+    updateTime();
+
+    // เอฟเฟกต์หัวใจ/ดอกไม้ ลอย 10 วินาที
+    function createFalling() {
+      const el = document.createElement("div");
+      el.classList.add(Math.random() > 0.5 ? "heart" : "flower");
+      el.textContent = Math.random() > 0.5 ? "💖" : "🌸";
+      el.style.left = Math.random() * 100 + "vw";
+      el.style.fontSize = (Math.random()*24 + 16) + "px";
+      el.style.animationDuration = "10s";
+      document.body.appendChild(el);
+
+      setTimeout(() => el.remove(), 10000);
+    }
+
+    setInterval(createFalling, 400);
+
+    // ปุ่มไปไทม์ไลน์
+    function goTimeline() {
+      window.location.href = "timeline.html";
+    }
+  </script>
+
+</body>
+</html>

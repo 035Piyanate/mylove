@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<title>เกมทายความทรงจำ 🎮</title>
+<style>
+body {font-family: Arial, sans-serif; background: linear-gradient(135deg,#ffe6f2,#ffd9e8); margin:0; padding:0; display:flex; justify-content:center; align-items:center; min-height:100vh; color:#333;}
+.container {background: rgba(255,255,255,0.25); backdrop-filter: blur(15px); border-radius: 25px; padding:30px 40px; text-align:center; box-shadow:0 8px 25px rgba(0,0,0,0.2); width:450px;}
+h2 {margin-bottom:15px;}
+p {font-size:1.1em; margin-bottom:20px;}
+button {padding:10px 20px; font-size:1.1em; border:none; border-radius:25px; background:#ff69b4; color:white; cursor:pointer; transition: transform 0.2s; margin:5px;}
+button:hover {transform:scale(1.1); background:#ff85c1;}
+img.optionImg {width:100px; height:100px; object-fit:cover; border-radius:15px; margin:5px; cursor:pointer; border:3px solid transparent;}
+img.optionImg.selected {border-color:#ff69b4;}
+#gift {display:none; margin-top:20px; font-size:1.5em;}
+#finalImage {width:150px; height:150px; margin-top:10px; border-radius:15px;}
+</style>
+</head>
+<body>
+
+<div class="container" id="gameScreen">
+  <h2>ทายความทรงจำของเรา 💖</h2>
+  <p id="questionText"></p>
+  <div id="options"></div>
+  <button id="submitBtn" style="display:none;">ยืนยันคำตอบ</button>
+  <div id="gift"></div>
+</div>
+
+<script>
+let currentScore = 0;
+let currentQuestion = 0;
+let selectedAnswer = null;
+
+const questions = [
+  {type:"image", question:"เลือกรูปเดทครั้งแรก", options:["img1.jpg","img2.jpg"], correct:1},
+  {type:"single", question:"เมนูเดทครั้งแรก", options:["สุกี้","พิซซ่า","ไก่ทอด"], correct:0},
+  {type:"single", question:"หนังเรื่องแรกที่ดูด้วยกัน", options:["Avengers","Frozen","Inception"], correct:2},
+  {type:"single", question:"ของขวัญครบรอบปีที่2", options:["ดอกไม้","ตุ๊กตา","ช็อกโกแลต"], correct:1},
+  {type:"single", question:"วันนี้คบรอบกี่ปี", options:["1","2","3"], correct:1},
+  {type:"single", question:"แมวตัวไหนเจอก่อน", options:["ตัวขาว","ตัวดำ"], correct:0},
+  {type:"single", question:"ทะเลครั้งแรกที่ไหน", options:["ภูเก็ต","พัทยา","กระบี่"], correct:0},
+  {type:"single", question:"วันที่ทักมาครั้งแรก", options:["01/09/2022","05/09/2022","09/09/2022"], correct:0},
+  {type:"single", question:"รูปทะเลที่เที่ยวด้วยกันครั้งแรก", options:["sea1.jpg","sea2.jpg","sea3.jpg"], correct:0},
+  {type:"single", question:"เมนูที่ชอบกินด้วยกันที่สุด", options:["ส้มตำ","พิซซ่า","ไก่ทอด"], correct:1}
+];
+
+function showQuestion(){
+  selectedAnswer = null;
+  const q = questions[currentQuestion];
+  const qDiv = document.getElementById("questionText");
+  const optionsDiv = document.getElementById("options");
+  const submitBtn = document.getElementById("submitBtn");
+  optionsDiv.innerHTML = "";
+
+  // แสดงปุ่มยืนยันเฉพาะข้อสุดท้าย
+  submitBtn.style.display = (currentQuestion === questions.length -1) ? "inline-block" : "none";
+
+  qDiv.textContent = (currentQuestion === questions.length-1) ? "" : q.question;
+
+  if(q.type === "single"){
+    q.options.forEach((opt,index)=>{
+      const btn = document.createElement("button");
+      btn.textContent = opt;
+      btn.onclick = ()=>{
+        selectedAnswer = index;
+        Array.from(optionsDiv.children).forEach(b=>b.style.border="");
+        btn.style.border="3px solid #ff69b4";
+
+        if(currentQuestion < questions.length-1){
+          // ข้อ 1-9 คลิกแล้วไปข้อถัดไปทันที
+          if(selectedAnswer === questions[currentQuestion].correct) currentScore++;
+          currentQuestion++;
+          showQuestion();
+        }
+      };
+      optionsDiv.appendChild(btn);
+    });
+  } else if(q.type === "image"){
+    q.options.forEach((src,index)=>{
+      const img = document.createElement("img");
+      img.src = src;
+      img.className = "optionImg";
+      img.onclick = ()=>{
+        selectedAnswer = index;
+        Array.from(optionsDiv.children).forEach(i=>i.classList.remove("selected"));
+        img.classList.add("selected");
+
+        if(currentQuestion < questions.length-1){
+          if(selectedAnswer === questions[currentQuestion].correct) currentScore++;
+          currentQuestion++;
+          showQuestion();
+        }
+      };
+      optionsDiv.appendChild(img);
+    });
+  }
+}
+
+// ปุ่มยืนยันเฉพาะข้อสุดท้าย
+document.getElementById("submitBtn").onclick = ()=>{
+  if(selectedAnswer === null) return alert("กรุณาเลือกคำตอบก่อนยืนยัน");
+  if(selectedAnswer === questions[currentQuestion].correct) currentScore++;
+
+  document.getElementById("options").style.display="none";
+  document.getElementById("submitBtn").style.display="none";
+  const giftDiv = document.getElementById("gift");
+  giftDiv.style.display="block";
+
+  // รูปโชว์ตอนจบ
+  giftDiv.innerHTML = `<img id="finalImage" src="sea1.jpg"><br>`;
+
+  if(currentScore >= 8){
+    giftDiv.innerHTML += `ดีใจด้วย 🎉 คะแนนรวม: ${currentScore} / ${questions.length} <br>
+      <button onclick="location.href='nextpage.html'">ไปหน้าถัดไป</button>`;
+  } else {
+    giftDiv.innerHTML += `อดของขวัญ 😢 คะแนนรวม: ${currentScore} / ${questions.length} <br>
+      <button onclick="location.href='nextpage.html'">ไปหน้าถัดไป</button>`;
+  }
+}
+
+showQuestion();
+</script>
+
+</body>
+</html>

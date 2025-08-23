@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<title>ต่อไป… 🎉</title>
+<style>
+body {
+  font-family: Arial, sans-serif;
+  background: linear-gradient(135deg,#ffe6f2,#ffd9e8);
+  display:flex; justify-content:center; align-items:center;
+  min-height:100vh; margin:0; text-align:center;
+  color:#333;
+}
+.container {
+  background: rgba(255,255,255,0.25);
+  backdrop-filter: blur(15px);
+  border-radius: 25px;
+  padding:30px 40px;
+  width:450px;
+  box-shadow:0 8px 25px rgba(0,0,0,0.2);
+}
+button {
+  padding:10px 20px; font-size:1.1em;
+  border:none; border-radius:25px;
+  background:#ff69b4; color:white; cursor:pointer;
+  margin:10px;
+  transition: transform 0.2s;
+}
+button:hover {transform:scale(1.1); background:#ff85c1;}
+</style>
+</head>
+<body>
+<div class="container">
+  <h2>🎉 ยินดีด้วย!</h2>
+  <p>คุณทำคะแนนได้สุดยอด! 💖</p>
+  <p>อยากลองเล่นซ้ำหรือไปดูเนื้อหาต่อไปไหม?</p>
+  <button onclick="location.href='game.html'">เล่นอีกครั้ง</button>
+  <button onclick="location.href='bonus.html'">ไปดูโบนัส/ของขวัญ</button>
+</div>
+</body>
+</html>

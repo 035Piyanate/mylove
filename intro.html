@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <title>เซอร์ไพรส์แฟน 💖</title>
+  <style>
+    body {
+      font-family: "Arial", sans-serif;
+      background: linear-gradient(135deg, #ffafbd, #ffc3a0);
+      margin: 0;
+      padding: 0;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      color: #fff;
+      text-align: center;
+      overflow: hidden;
+    }
+    h1 {
+      font-size: 3em;
+      margin-bottom: 20px;
+      animation: fadeInDown 2s ease;
+    }
+    p {
+      font-size: 1.2em;
+      margin-bottom: 30px;
+      animation: fadeInUp 2s ease;
+    }
+    button {
+      background: #ff69b4;
+      border: none;
+      padding: 12px 25px;
+      border-radius: 30px;
+      font-size: 1.2em;
+      color: white;
+      cursor: pointer;
+      transition: transform 0.2s;
+    }
+    button:hover {
+      transform: scale(1.1);
+      background: #ff85c1;
+    }
+    @keyframes fadeInDown {
+      from { opacity: 0; transform: translateY(-30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    /* หัวใจลอย */
+    .heart {
+      position: fixed;
+      top: -10px;
+      font-size: 20px;
+      color: #fff;
+      animation: fall linear forwards;
+    }
+    @keyframes fall {
+      to {
+        transform: translateY(110vh);
+        opacity: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+  <h1>ยินดีต้อนรับสู่โลกของเรา 💕</h1>
+  <p>ก่อนเข้าไป ต้องใส่รหัสลับก่อนนะ 😉</p>
+  <button onclick="nextPage()">เริ่มเลย</button>
+
+  <script>
+    // ฟังก์ชันไปหน้าถัดไป
+    function nextPage() {
+      window.location.href = "password.html"; // 👉 ชี้ไปหน้ารหัสลับ
+    }
+
+    // ฟังก์ชันสร้างหัวใจลอย
+    function createHeart() {
+      const heart = document.createElement("div");
+      heart.classList.add("heart");
+      heart.textContent = "💖";
+      heart.style.left = Math.random() * 100 + "vw";
+      heart.style.animationDuration = (Math.random() * 3 + 2) + "s";
+      document.body.appendChild(heart);
+
+      setTimeout(() => {
+        heart.remove();
+      }, 5000);
+    }
+    setInterval(createHeart, 500);
+  </script>
+</body>
+</html>
