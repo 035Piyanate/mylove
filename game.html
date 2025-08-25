@@ -2,123 +2,223 @@
 <html lang="th">
 <head>
 <meta charset="UTF-8">
-<title>เกมทายความทรงจำ 🎮</title>
+<title>💕 Quiz Game 💕</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="https://fonts.googleapis.com/css2?family=Kanit:wght@400;600&display=swap" rel="stylesheet">
 <style>
-body {font-family: Arial, sans-serif; background: linear-gradient(135deg,#ffe6f2,#ffd9e8); margin:0; padding:0; display:flex; justify-content:center; align-items:center; min-height:100vh; color:#333;}
-.container {background: rgba(255,255,255,0.25); backdrop-filter: blur(15px); border-radius: 25px; padding:30px 40px; text-align:center; box-shadow:0 8px 25px rgba(0,0,0,0.2); width:450px;}
-h2 {margin-bottom:15px;}
-p {font-size:1.1em; margin-bottom:20px;}
-button {padding:10px 20px; font-size:1.1em; border:none; border-radius:25px; background:#ff69b4; color:white; cursor:pointer; transition: transform 0.2s; margin:5px;}
-button:hover {transform:scale(1.1); background:#ff85c1;}
-img.optionImg {width:100px; height:100px; object-fit:cover; border-radius:15px; margin:5px; cursor:pointer; border:3px solid transparent;}
-img.optionImg.selected {border-color:#ff69b4;}
-#gift {display:none; margin-top:20px; font-size:1.5em;}
-#finalImage {width:150px; height:150px; margin-top:10px; border-radius:15px;}
+body {
+  font-family: 'Kanit', sans-serif;
+  background: linear-gradient(135deg,#ffe4e1,#ffd6e0,#ffecf2);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  margin: 0;
+  min-height: 100vh;
+}
+
+/* หัวข้อ */
+h1 {
+  color: #d147a3;
+  margin-bottom: 15px;
+  text-shadow: 2px 2px #fff;
+  font-size: 28px;
+}
+
+/* คะแนน */
+#scoreBoard {
+  background: rgba(255,255,255,0.7);
+  border-radius: 15px;
+  padding: 10px 20px;
+  font-size: 18px;
+  margin-bottom: 20px;
+  color: #444;
+  box-shadow: 0 5px 15px rgba(255,20,147,0.3);
+  font-weight: bold;
+}
+
+/* กล่องคำถาม */
+#questionBox {
+  background: #fff0f5;
+  padding: 25px;
+  border-radius: 20px;
+  box-shadow: 0 12px 25px rgba(255,20,147,0.3);
+  width: 100%;
+  max-width: 500px;
+  animation: fadeIn 0.5s ease;
+}
+
+#questionText {
+  font-size: 20px;
+  font-weight: 600;
+  margin-bottom: 20px;
+  color: #d147a3;
+  text-align: center;
+}
+
+/* ปุ่มตัวเลือก */
+button.option-btn {
+  display: block;
+  width: 100%;
+  padding: 15px;
+  margin: 10px 0;
+  font-size: 16px;
+  border: none;
+  border-radius: 15px;
+  background: linear-gradient(145deg,#ff80b5,#ff4da6);
+  color: white;
+  cursor: pointer;
+  transition: transform 0.2s, background 0.3s, box-shadow 0.3s;
+  box-shadow: 0 6px 15px rgba(255,20,147,0.3);
+  font-weight: bold;
+}
+
+button.option-btn:hover {
+  transform: scale(1.05);
+  background: linear-gradient(145deg,#ff99cc,#ff66b2);
+}
+
+button.option-btn:active {
+  transform: scale(0.95);
+}
+
+/* ปุ่มถัดไป */
+#nextBtn {
+  margin-top: 20px;
+  padding: 12px 25px;
+  font-size: 18px;
+  border: none;
+  border-radius: 15px;
+  background: linear-gradient(145deg,#4caf50,#2e7d32);
+  color: white;
+  cursor: pointer;
+  display: none;
+  transition: transform 0.2s, background 0.3s, box-shadow 0.3s;
+  box-shadow: 0 6px 15px rgba(0,128,0,0.3);
+}
+
+#nextBtn:hover {
+  transform: scale(1.05);
+  background: linear-gradient(145deg,#66bb6a,#388e3c);
+}
+
+/* Progress */
+#progress {
+  margin-top: 10px;
+  font-size: 14px;
+  color: #555;
+  text-align: center;
+  font-weight: bold;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(15px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  h1 { font-size: 22px; }
+  #questionText { font-size: 18px; }
+  button.option-btn { font-size: 14px; padding: 12px; border-radius: 12px;}
+  #nextBtn { font-size: 16px; padding: 12px 20px; border-radius: 12px; }
+}
 </style>
 </head>
 <body>
 
-<div class="container" id="gameScreen">
-  <h2>ทายความทรงจำของเรา 💖</h2>
-  <p id="questionText"></p>
+<h1>💕 Quiz Game 💕</h1>
+
+<div id="scoreBoard">คะแนน: 0</div>
+
+<div id="questionBox">
+  <div id="questionText">--</div>
   <div id="options"></div>
-  <button id="submitBtn" style="display:none;">ยืนยันคำตอบ</button>
-  <div id="gift"></div>
+  <div id="progress"></div>
 </div>
 
-<script>
-let currentScore = 0;
-let currentQuestion = 0;
-let selectedAnswer = null;
+<button id="nextBtn" onclick="nextQuestion()">ถัดไป ➡️</button>
 
+<script>
+// ข้อมูลคำถาม
 const questions = [
-  {type:"image", question:"เลือกรูปสัตว์ที่คนสวยที่สุดชอบ", options:["img/img1.PNG","images/img2.jpg"], correct:1},
-  {type:"single", question:"เมนูเดทครั้งแรก", options:["สุกี้","พิซซ่า","ไก่ทอด"], correct:0},
-  {type:"single", question:"หนังเรื่องแรกที่ดูด้วยกัน", options:["Avengers","Frozen","Inception"], correct:2},
-  {type:"single", question:"ของขวัญครบรอบปีที่2", options:["ดอกไม้","ตุ๊กตา","ช็อกโกแลต"], correct:1},
-  {type:"single", question:"วันนี้คบรอบกี่ปี", options:["1","2","3"], correct:1},
-  {type:"single", question:"แมวตัวไหนเจอก่อน", options:["ตัวขาว","ตัวดำ"], correct:0},
-  {type:"single", question:"ทะเลครั้งแรกที่ไหน", options:["ภูเก็ต","พัทยา","กระบี่"], correct:0},
-  {type:"single", question:"วันที่ทักมาครั้งแรก", options:["01/09/2022","05/09/2022","09/09/2022"], correct:0},
-  {type:"single", question:"รูปทะเลที่เที่ยวด้วยกันครั้งแรก", options:["sea1.jpg","sea2.jpg","sea3.jpg"], correct:0},
-  {type:"single", question:"เมนูที่ชอบกินด้วยกันที่สุด", options:["ส้มตำ","พิซซ่า","ไก่ทอด"], correct:1}
+  { q: "ของขวัญที่ครบรอบ1ปี ที่เค้าให้คืออะไร",
+    options: ["กระเป๋า", "สกินวาโร", "แป้นพิมพ์โกะโจ"],
+    answer: 1 },
+  { q: "เมนูแรกที่กินด้วยกันในวันครบรอบ2เดือนคือเมนูอะไร",
+    options: ["morfin shabu", "jeffer", "kfc"],
+    answer: 1 },
+  { q: "วันแรกที่ทักหากันวันที่เท่าไหร่ (ใบ้: กรกฎาคม 2565)",
+    options: ["31","21","11"],
+    answer: 2 },
+  { q: "ประโยคแรกที่ทักหาคืออะไร",
+    options: ["เธอ","สวัสดี","ชื่อไร","หลับยัง","กิ๊ฟป่าว"],
+    answer: 3 },
+  { q: "วันเกิดเค้าวันที่เท่าไหร่",
+    options: ["10/พ.ค.","19/มิ.ย.","18/ก.ค."],
+    answer: 1 }
 ];
 
-function showQuestion(){
-  selectedAnswer = null;
+let currentQuestion = 0;
+let score = 0;
+
+const questionText = document.getElementById('questionText');
+const optionsDiv = document.getElementById('options');
+const nextBtn = document.getElementById('nextBtn');
+const scoreBoard = document.getElementById('scoreBoard');
+const progress = document.getElementById('progress');
+
+function loadQuestion() {
+  nextBtn.style.display = 'none';
   const q = questions[currentQuestion];
-  const qDiv = document.getElementById("questionText");
-  const optionsDiv = document.getElementById("options");
-  const submitBtn = document.getElementById("submitBtn");
-  optionsDiv.innerHTML = "";
-
-  // แสดงปุ่มยืนยันเฉพาะข้อสุดท้าย
-  submitBtn.style.display = (currentQuestion === questions.length -1) ? "inline-block" : "none";
-
-  qDiv.textContent = (currentQuestion === questions.length-1) ? "" : q.question;
-
-  if(q.type === "single"){
-    q.options.forEach((opt,index)=>{
-      const btn = document.createElement("button");
-      btn.textContent = opt;
-      btn.onclick = ()=>{
-        selectedAnswer = index;
-        Array.from(optionsDiv.children).forEach(b=>b.style.border="");
-        btn.style.border="3px solid #ff69b4";
-
-        if(currentQuestion < questions.length-1){
-          // ข้อ 1-9 คลิกแล้วไปข้อถัดไปทันที
-          if(selectedAnswer === questions[currentQuestion].correct) currentScore++;
-          currentQuestion++;
-          showQuestion();
-        }
-      };
-      optionsDiv.appendChild(btn);
-    });
-  } else if(q.type === "image"){
-    q.options.forEach((src,index)=>{
-      const img = document.createElement("img");
-      img.src = src;
-      img.className = "optionImg";
-      img.onclick = ()=>{
-        selectedAnswer = index;
-        Array.from(optionsDiv.children).forEach(i=>i.classList.remove("selected"));
-        img.classList.add("selected");
-
-        if(currentQuestion < questions.length-1){
-          if(selectedAnswer === questions[currentQuestion].correct) currentScore++;
-          currentQuestion++;
-          showQuestion();
-        }
-      };
-      optionsDiv.appendChild(img);
-    });
-  }
+  questionText.innerText = q.q;
+  progress.innerText = `ข้อที่ ${currentQuestion+1} จาก ${questions.length}`;
+  optionsDiv.innerHTML = '';
+  q.options.forEach((opt, i) => {
+    const btn = document.createElement('button');
+    btn.className = 'option-btn';
+    btn.innerText = opt;
+    btn.onclick = () => selectAnswer(i);
+    optionsDiv.appendChild(btn);
+  });
 }
 
-// ปุ่มยืนยันเฉพาะข้อสุดท้าย
-document.getElementById("submitBtn").onclick = ()=>{
-  if(selectedAnswer === null) return alert("กรุณาเลือกคำตอบก่อนยืนยัน");
-  if(selectedAnswer === questions[currentQuestion].correct) currentScore++;
+function selectAnswer(selected) {
+  const correct = questions[currentQuestion].answer;
+  if(selected === correct) {
+    score++;
+    scoreBoard.innerText = `คะแนน: ${score}`;
+  }
+  document.querySelectorAll('.option-btn').forEach(b => b.disabled = true);
+  nextBtn.style.display = 'block';
+}
 
-  document.getElementById("options").style.display="none";
-  document.getElementById("submitBtn").style.display="none";
-  const giftDiv = document.getElementById("gift");
-  giftDiv.style.display="block";
-
-  // รูปโชว์ตอนจบ
-  giftDiv.innerHTML = `<img id="finalImage" src="sea1.jpg"><br>`;
-
-  if(currentScore >= 8){
-    giftDiv.innerHTML += `ดีใจด้วย 🎉 คะแนนรวม: ${currentScore} / ${questions.length} <br>
-      <button onclick="location.href='nextpage.html'">ไปหน้าถัดไป</button>`;
+function nextQuestion() {
+  currentQuestion++;
+  if(currentQuestion < questions.length) {
+    loadQuestion();
   } else {
-    giftDiv.innerHTML += `อดของขวัญ 😢 คะแนนรวม: ${currentScore} / ${questions.length} <br>
-      <button onclick="location.href='nextpage.html'">ไปหน้าถัดไป</button>`;
+    if(score < 4) {
+      alert(`คุณได้ ${score} คะแนน ❌ ต้องทำใหม่ตั้งแต่ต้นนะคะ`);
+      currentQuestion = 0;
+      score = 0;
+      scoreBoard.innerText = "คะแนน: 0";
+      loadQuestion();
+    } else if(score === 5) {
+      alert(`คุณได้คะแนนเต็ม! 🎉 ไปหน้าของรางวัลกันเลย 💕`);
+      window.location.href = 'gift.html';
+    } else {
+      alert(`คุณได้ ${score} คะแนนค่ะ 😊`);
+      currentQuestion = 0;
+      score = 0;
+      scoreBoard.innerText = "คะแนน: 0";
+      loadQuestion();
+    }
   }
 }
 
-showQuestion();
+// เริ่มคำถามแรก
+loadQuestion();
 </script>
 
 </body>

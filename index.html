@@ -1,96 +1,151 @@
 <!DOCTYPE html>
-<html lang="th">
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>เซอร์ไพรส์แฟน 💖</title>
-  <style>
-    body {
-      font-family: "Arial", sans-serif;
-      background: linear-gradient(135deg, #ffafbd, #ffc3a0);
-      margin: 0;
-      padding: 0;
-      height: 100vh;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      color: #fff;
-      text-align: center;
-      overflow: hidden;
-    }
-    h1 {
-      font-size: 3em;
-      margin-bottom: 20px;
-      animation: fadeInDown 2s ease;
-    }
-    p {
-      font-size: 1.2em;
-      margin-bottom: 30px;
-      animation: fadeInUp 2s ease;
-    }
-    button {
-      background: #ff69b4;
-      border: none;
-      padding: 12px 25px;
-      border-radius: 30px;
-      font-size: 1.2em;
-      color: white;
-      cursor: pointer;
-      transition: transform 0.2s;
-    }
-    button:hover {
-      transform: scale(1.1);
-      background: #ff85c1;
-    }
-    @keyframes fadeInDown {
-      from { opacity: 0; transform: translateY(-30px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-    @keyframes fadeInUp {
-      from { opacity: 0; transform: translateY(30px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-    /* หัวใจลอย */
-    .heart {
-      position: fixed;
-      top: -10px;
-      font-size: 20px;
-      color: #fff;
-      animation: fall linear forwards;
-    }
-    @keyframes fall {
-      to {
-        transform: translateY(110vh);
-        opacity: 0;
-      }
-    }
-  </style>
+<meta charset="UTF-8">
+<title>Intro Anniversary 💕</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="https://fonts.googleapis.com/css2?family=Kanit:wght@400;600&display=swap" rel="stylesheet">
+<style>
+body {
+  margin: 0;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(135deg, #ffe6f0, #ffd6e0, #ffecf2);
+  font-family: 'Kanit', sans-serif;
+  overflow: hidden;
+  position: relative;
+}
+
+/* กล่องข้อความหัวใจ */
+.container {
+  width: 80%;
+  max-width: 450px;
+  text-align: center;
+  position: relative;
+}
+
+.heart-box {
+  background-image: url('heart.png'); /* ใส่รูปหัวใจของคุณ */
+  background-size: 150px 150px;
+  background-repeat: no-repeat;
+  background-position: center top;
+  padding: 60px 20px;
+  min-height: 280px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(255,0,128,0.3);
+  background-color: rgba(255, 255, 255, 0.9);
+}
+
+#introText {
+  color: #d147a3;
+  font-size: 20px;
+  line-height: 1.5;
+  font-weight: bold;
+  text-align: center;
+  text-shadow: 1px 1px 2px #fff;
+}
+
+/* แถบโหลด */
+#progressContainer {
+  width: 100%;
+  background-color: #ffe6f0;
+  border-radius: 25px;
+  overflow: hidden;
+  height: 30px;
+  margin-top: 30px;
+  box-shadow: 0 5px 10px rgba(0,0,0,0.2);
+}
+
+#progressBar {
+  height: 100%;
+  width: 0%;
+  background-color: #d147a3;
+  text-align: center;
+  color: white;
+  line-height: 30px;
+  font-weight: bold;
+  border-radius: 25px;
+  transition: width 0.1s;
+}
+
+/* หัวใจลอยขึ้น */
+.heart {
+  position: absolute;
+  font-size: 24px;
+  color: #ff4d6d;
+  pointer-events: none;
+  animation: floatUp 1s forwards;
+}
+
+@keyframes floatUp {
+  0% { opacity: 1; transform: translateY(0) scale(1); }
+  100% { opacity: 0; transform: translateY(-100px) scale(1.5); }
+}
+
+/* Responsive */
+@media (max-width: 500px) {
+  .heart-box {
+    padding: 40px 10px;
+    min-height: 220px;
+  }
+  #introText {
+    font-size: 16px;
+  }
+  #progressContainer {
+    height: 20px;
+  }
+  #progressBar {
+    line-height: 20px;
+  }
+}
+</style>
 </head>
 <body>
-  <h1>ยินดีต้อนรับสู่โลกของเรา 💕</h1>
-  <p>ก่อนเข้าไป ต้องใส่รหัสลับก่อนนะ 😉</p>
-  <button onclick="nextPage()">เริ่มเลย</button>
 
-  <script>
-    // ฟังก์ชันไปหน้าถัดไป
-    function nextPage() {
-      window.location.href = "password.html"; // 👉 ชี้ไปหน้ารหัสลับ
-    }
+<div class="container">
+  <div class="heart-box">
+    <div id="introText">
+      Anniversary 3 Years<br>
+      Thank you for being with me all this time 💕
+    </div>
+    <div id="progressContainer">
+      <div id="progressBar">0%</div>
+    </div>
+  </div>
+</div>
 
-    // ฟังก์ชันสร้างหัวใจลอย
-    function createHeart() {
-      const heart = document.createElement("div");
-      heart.classList.add("heart");
-      heart.textContent = "💖";
-      heart.style.left = Math.random() * 100 + "vw";
-      heart.style.animationDuration = (Math.random() * 3 + 2) + "s";
-      document.body.appendChild(heart);
+<script>
+const progressBar = document.getElementById('progressBar');
+let width = 0;
 
-      setTimeout(() => {
-        heart.remove();
-      }, 5000);
-    }
-    setInterval(createHeart, 500);
-  </script>
+function createHeart() {
+  const heart = document.createElement('div');
+  heart.classList.add('heart');
+  heart.style.left = Math.random() * window.innerWidth + 'px';
+  heart.style.top = window.innerHeight + 'px';
+  heart.innerText = "💖";
+  document.body.appendChild(heart);
+  setTimeout(() => heart.remove(), 1000);
+}
+
+const interval = setInterval(() => {
+  if(width >= 100) {
+    clearInterval(interval);
+    window.location.href = 'password.html'; // ไปหน้า main
+  } else {
+    width++;
+    progressBar.style.width = width + '%';
+    progressBar.textContent = width + '%';
+    if(width % 5 === 0) createHeart(); // ลอยหัวใจทุก 5%
+  }
+}, 50);
+</script>
+
 </body>
 </html>

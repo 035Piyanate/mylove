@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<title>💘 Love Shooting Game 💘</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="https://fonts.googleapis.com/css2?family=Itim&display=swap" rel="stylesheet">
+<style>
+body {
+  margin: 0;
+  font-family: 'Itim', cursive;
+  background: linear-gradient(135deg,#ffd6e0,#ffe9ec,#ffcfe0);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  overflow: hidden;
+}
+h1 {
+  color: #ff4d6d;
+  margin-bottom: 10px;
+  text-shadow: 2px 2px 4px rgba(255,255,255,0.9);
+  animation: pop 1s ease-in-out infinite alternate;
+}
+@keyframes pop {
+  from { transform: scale(1); }
+  to { transform: scale(1.05); }
+}
+#gameArea {
+  position: relative;
+  width: 90%;
+  max-width: 400px;
+  height: 400px;
+  background: rgba(255,255,255,0.9);
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+  border: 4px solid #ff9ebb;
+}
+.target {
+  position: absolute;
+  width: 60px;
+  height: 60px;
+  background: url('https://cdn-icons-png.flaticon.com/512/833/833472.png') no-repeat center/contain;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+.target:active {
+  transform: scale(0.8);
+}
+#score, #timer {
+  margin-top: 10px;
+  font-size: 20px;
+  background: #fff5f8;
+  padding: 6px 15px;
+  border-radius: 12px;
+  color: #d63384;
+  box-shadow: 0 3px 8px rgba(0,0,0,0.1);
+}
+.heart {
+  position: absolute;
+  font-size: 24px;
+  color: #ff4d6d;
+  pointer-events: none;
+  animation: floatUp 1s forwards;
+}
+@keyframes floatUp {
+  0% { opacity: 1; transform: translateY(0) scale(1); }
+  100% { opacity: 0; transform: translateY(-50px) scale(1.5); }
+}
+</style>
+</head>
+<body>
+  <h1>💘 Love Shooting Game 💘</h1>
+  <div id="gameArea"></div>
+  <div id="score">คะแนน: 0</div>
+  <div id="timer">เวลา: 10 วิ</div>
+
+<script>
+const gameArea = document.getElementById("gameArea");
+const scoreBoard = document.getElementById("score");
+const timerEl = document.getElementById("timer");
+let score = 0;
+let timeLeft = 10;
+let gameInterval, targetInterval;
+
+// เอฟเฟกต์หัวใจตอนยิง
+function showHeart(x, y) {
+  const heart = document.createElement("div");
+  heart.classList.add("heart");
+  heart.style.left = x + "px";
+  heart.style.top = y + "px";
+  heart.innerText = "💖";
+  gameArea.appendChild(heart);
+  setTimeout(() => heart.remove(), 1000);
+}
+
+// สร้างเป้าหมายแบบสุ่ม
+function spawnTarget() {
+  const target = document.createElement("div");
+  target.classList.add("target");
+
+  const x = Math.random() * (gameArea.clientWidth - 60);
+  const y = Math.random() * (gameArea.clientHeight - 60);
+  target.style.left = x + "px";
+  target.style.top = y + "px";
+
+  target.onclick = (e) => {
+    score++;
+    scoreBoard.innerText = "คะแนน: " + score;
+    showHeart(e.offsetX + target.offsetLeft, e.offsetY + target.offsetTop);
+    target.remove();
+  };
+
+  gameArea.appendChild(target);
+  setTimeout(() => target.remove(), 1000);
+}
+
+// เริ่มเกม
+function startGame() {
+  score = 0;
+  timeLeft = 10;
+  scoreBoard.innerText = "คะแนน: 0";
+  timerEl.innerText = "เวลา: 10 วิ";
+
+  gameInterval = setInterval(() => {
+    timeLeft--;
+    timerEl.innerText = "เวลา: " + timeLeft + " วิ";
+    if(timeLeft <= 0) {
+      endGame();
+    }
+  }, 1000);
+
+  targetInterval = setInterval(spawnTarget, 700);
+}
+
+// จบเกม
+function endGame() {
+  clearInterval(gameInterval);
+  clearInterval(targetInterval);
+  setTimeout(() => {
+    if (score < 10) {
+      alert("นึกว่าจะได้เยอะกว่านี้สะอีก เห็นเล่นเกมทุกวัน 😝");
+    } else {
+      alert("เห็นที่รักชอบเล่นเกม เลยขยันทำเกมนิดนุง 💕");
+    }
+    window.location.href = "bonus.html";
+  }, 300);
+}
+
+// เริ่มอัตโนมัติ
+startGame();
+</script>
+</body>
+</html>

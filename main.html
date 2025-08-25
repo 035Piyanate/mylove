@@ -1,160 +1,159 @@
 <!DOCTYPE html>
 <html lang="th">
 <head>
-  <meta charset="UTF-8">
-  <title>หน้าหลัก 💖</title>
-  <style>
-    body {
-      font-family: "Arial", sans-serif;
-      background: linear-gradient(135deg, #ffe6f2, #ffd9e8);
-      margin: 0;
-      padding: 0;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      min-height: 100vh;
-      overflow: hidden;
-      color: #333;
-    }
+<meta charset="UTF-8">
+<title>ข้อความเลื่อนทีละประโยค</title>
+<style>
+  body {
+    font-family: 'Kanit', sans-serif;
+    background: linear-gradient(120deg, #ffe4e1, #fff0f5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    overflow: hidden;
+    position: relative;
+  }
 
-    .container {
-      background: rgba(255,255,255,0.25);
-      backdrop-filter: blur(15px);
-      border-radius: 25px;
-      padding: 30px 40px;
-      text-align: center;
-      box-shadow: 0 8px 25px rgba(0,0,0,0.2);
-      width: 400px;
-      position: relative;
-    }
+  /* หัวใจตกแต่งพื้นหลัง */
+  .heart {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    background: pink;
+    transform: rotate(45deg);
+    animation: float 6s infinite ease-in-out;
+    opacity: 0.6;
+  }
 
-    h1 {
-      font-size: 1.8em;
-      margin-bottom: 15px;
-    }
+  .heart::before,
+  .heart::after {
+    content: "";
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    background: pink;
+    border-radius: 50%;
+  }
 
-    #timeDisplay {
-      font-size: 1.2em;
-      margin-bottom: 20px;
-      font-weight: bold;
-    }
+  .heart::before {
+    top: -10px;
+    left: 0;
+  }
+  .heart::after {
+    left: -10px;
+    top: 0;
+  }
 
-    .photo-gallery {
-      display: flex;
-      justify-content: center;
-      gap: 10px;
-      margin-bottom: 20px;
-    }
+  @keyframes float {
+    0% { transform: translateY(0) rotate(45deg); opacity: 0.7; }
+    50% { transform: translateY(-80px) rotate(45deg); opacity: 1; }
+    100% { transform: translateY(0) rotate(45deg); opacity: 0.7; }
+  }
 
-    .photo-gallery img {
-      width: 90px;
-      height: 90px;
-      object-fit: cover;
-      border-radius: 15px;
-      box-shadow: 0 3px 10px rgba(0,0,0,0.2);
-      transition: transform 0.3s;
-    }
+  #chat {
+    width: 330px;
+    min-height: 450px;
+    background: #fff;
+    border-radius: 25px;
+    padding: 20px 15px;
+    box-shadow: 0 15px 40px rgba(209,71,163,0.25);
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    border: 3px solid #ffd6e8;
+    position: relative;
+    z-index: 2;
+  }
 
-    .photo-gallery img:hover {
-      transform: scale(1.05);
-    }
+  .bubble {
+    background: #ffd6e8;
+    color: #333;
+    padding: 12px 16px;
+    border-radius: 20px 20px 20px 5px;
+    margin: 6px 0;
+    max-width: 80%;
+    align-self: flex-start;
+    opacity: 0;
+    transform: translateY(10px);
+    animation: fadeIn 0.5s forwards;
+    font-size: 16px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  }
 
-    button {
-      padding: 10px 20px;
-      font-size: 1.1em;
-      border: none;
-      border-radius: 25px;
-      background: #ff69b4;
-      color: white;
-      cursor: pointer;
-      transition: transform 0.2s;
+  @keyframes fadeIn {
+    to {
+      opacity: 1;
+      transform: translateY(0);
     }
+  }
 
-    button:hover {
-      transform: scale(1.1);
-      background: #ff85c1;
-    }
+  #nextButton {
+    margin-top: 15px;
+    padding: 12px 22px;
+    font-size: 16px;
+    border: none;
+    border-radius: 25px;
+    background: linear-gradient(90deg, #ff99cc, #d147a3);
+    color: white;
+    cursor: pointer;
+    display: none;
+    transition: transform 0.2s, background 0.3s;
+    box-shadow: 0 6px 15px #d147a3;
+  }
 
-    .heart, .flower {
-      position: fixed;
-      top: -50px;
-      font-size: 24px;
-      pointer-events: none;
-      animation: fall linear forwards;
-    }
-
-    @keyframes fall {
-      to {
-        transform: translateY(110vh) rotate(360deg);
-        opacity: 0;
-      }
-    }
-  </style>
+  #nextButton:hover {
+    background: linear-gradient(90deg, #d147a3, #ff99cc);
+    transform: scale(1.05);
+  }
+</style>
 </head>
 <body>
 
-  <div class="container">
-    <h1>เราคบกัน 💕</h1>
-    <div id="timeDisplay">กำลังโหลด...</div>
+<!-- หัวใจลอย -->
+<div class="heart" style="top:10%; left:15%; animation-delay:0s;"></div>
+<div class="heart" style="top:40%; left:70%; animation-delay:2s;"></div>
+<div class="heart" style="top:70%; left:30%; animation-delay:4s;"></div>
 
-    <div class="photo-gallery">
-      <img src="photo1.jpg" alt="รูปความทรงจำ 1">
-      <img src="photo2.jpg" alt="รูปความทรงจำ 2">
-      <img src="photo3.jpg" alt="รูปความทรงจำ 3">
-    </div>
+<div>
+  <div id="chat"></div>
+  <button id="nextButton" onclick="goNext()">ไปหน้าถัดไป 💌</button>
+</div>
 
-    <button onclick="goTimeline()">ไปดูไทม์ไลน์ของเรา</button>
-  </div>
+<script>
+const messages = [
+  "เธอคือคนพิเศษของเค้า 🥰",
+  "ทุกวันมีความหมายเพราะมีเธออยู่ 💖",
+  "ขอบคุณที่อยู่ข้างกันมาตลอดนะ 🌸",
+  "สัญญาว่าจะดูแลเธอให้ดีที่สุด 💕",
+  "พร้อมไปต่อหน้าถัดไปมั้ยเอ่ย? 😚"
+]; 
 
-  <script>
-    // คำนวณเวลาที่คบกัน
-    const startDate = new Date("2022-09-09T00:00:00");
-    const timeDisplay = document.getElementById("timeDisplay");
+const chatDiv = document.getElementById('chat');
+const nextButton = document.getElementById('nextButton');
+let index = 0;
 
-    function updateTime() {
-      const now = new Date();
-      let diff = now - startDate;
+function showNextMessage() {
+  if(index < messages.length) {
+    const bubble = document.createElement('div');
+    bubble.className = 'bubble';
+    bubble.textContent = messages[index];
+    chatDiv.appendChild(bubble);
+    chatDiv.scrollTop = chatDiv.scrollHeight; 
+    index++;
+    setTimeout(showNextMessage, 1200); 
+  } else {
+    nextButton.style.display = 'block';
+  }
+}
 
-      let seconds = Math.floor(diff / 1000);
-      let minutes = Math.floor(seconds / 60);
-      let hours = Math.floor(minutes / 60);
-      let days = Math.floor(hours / 24);
+window.onload = showNextMessage;
 
-      const years = Math.floor(days / 365);
-      const months = Math.floor((days % 365) / 30);
-      const remDays = days - years*365 - months*30;
-      const remHours = hours % 24;
-      const remMinutes = minutes % 60;
-      const remSeconds = seconds % 60;
-
-      timeDisplay.textContent = 
-        `${years} ปี ${months} เดือน ${remDays} วัน ` +
-        `${remHours} ชั่วโมง ${remMinutes} นาที ${remSeconds} วินาที`;
-    }
-
-    setInterval(updateTime, 1000);
-    updateTime();
-
-    // เอฟเฟกต์หัวใจ/ดอกไม้ ลอย 10 วินาที
-    function createFalling() {
-      const el = document.createElement("div");
-      el.classList.add(Math.random() > 0.5 ? "heart" : "flower");
-      el.textContent = Math.random() > 0.5 ? "💖" : "🌸";
-      el.style.left = Math.random() * 100 + "vw";
-      el.style.fontSize = (Math.random()*24 + 16) + "px";
-      el.style.animationDuration = "10s";
-      document.body.appendChild(el);
-
-      setTimeout(() => el.remove(), 10000);
-    }
-
-    setInterval(createFalling, 400);
-
-    // ปุ่มไปไทม์ไลน์
-    function goTimeline() {
-      window.location.href = "timeline.html";
-    }
-  </script>
+function goNext() {
+  window.location.href = 'nextpage.html'; 
+}
+</script>
 
 </body>
 </html>
