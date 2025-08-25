@@ -10,10 +10,22 @@ body {
   font-family: 'Kanit', sans-serif;
   background: linear-gradient(135deg,#ffe6f0,#ffd6e0,#ffecf2);
   display: flex;
-  flex-direction: column;
+  justify-content: center;
   align-items: center;
-  padding: 40px 20px;
+  min-height: 100vh;
   margin: 0;
+  padding: 20px;
+}
+
+/* กล่องหลัก */
+.main-card {
+  background: #fff0f5;
+  border-radius: 25px;
+  box-shadow: 0 12px 35px rgba(255,105,180,0.25),
+              inset 0 3px 10px rgba(255,255,255,0.6);
+  padding: 30px 25px;
+  max-width: 500px;
+  width: 100%;
   text-align: center;
 }
 
@@ -21,14 +33,14 @@ body {
 h1 {
   color: #d147a3;
   font-size: 28px;
-  margin-bottom: 15px;
+  margin-bottom: 20px;
   text-shadow: 1px 1px 2px #fff;
 }
 
 /* ข้อความ */
 p {
   font-size: 18px;
-  margin-bottom: 30px;
+  margin-bottom: 25px;
   color: #333;
   line-height: 1.6;
   background: rgba(255,230,240,0.6);
@@ -39,10 +51,9 @@ p {
 
 /* รูป */
 img {
-  max-width: 300px;
-  width: 100%;
+  max-width: 80%;
   border-radius: 20px;
-  margin-bottom: 30px;
+  margin-bottom: 25px;
   box-shadow: 0 8px 25px rgba(255,20,147,0.3);
   transition: transform 0.2s;
 }
@@ -60,10 +71,10 @@ img:hover {
 }
 
 button {
-  padding: 12px 30px;
+  padding: 12px 25px;
   font-size: 18px;
   border: none;
-  border-radius: 15px;
+  border-radius: 20px;
   background: linear-gradient(145deg,#ff80bf,#ff4da6);
   color: white;
   cursor: pointer;
@@ -99,16 +110,18 @@ button:hover {
 </head>
 <body>
 
-<h1>เรื่องราวที่ผ่านมาด้วยกัน 💕</h1>
-<p>พร้อมที่จะย้อนวันวานความรักเราแล้วรึยัง?<br>
-หากพร้อมแล้วให้กดปุ่มเริ่ม<br>
-(ถ้าไม่ผ่านอดได้ของรางวัลนะ)</p>
+<div class="main-card">
+  <h1>เรื่องราวที่ผ่านมาด้วยกัน 💕</h1>
+  <p>พร้อมที่จะย้อนวันวานความรักเราแล้วรึยัง?<br>
+  หากพร้อมแล้วให้กดปุ่มเริ่ม<br>
+  (ถ้าไม่ผ่านอดได้ของรางวัลนะ)</p>
 
-<img src="story-image.jpg" alt="Story Image">
+  <img src="img/storyimg.png" alt="Story Image">
 
-<div class="button-row">
-  <button onclick="startGame()">เริ่มเกม 🎮</button>
-  <button onclick="goMain()">กลับไปหน้า Main 🏠</button>
+  <div class="button-row">
+    <button onclick="startGame()">เริ่มเกม 🎮</button>
+    <button onclick="goMain()">กลับ🏠</button>
+  </div>
 </div>
 
 <script>
@@ -117,7 +130,7 @@ function startGame() {
 }
 
 function goMain() {
-  window.location.href = 'main.html'; // กลับไปหน้า main
+  window.location.href = 'nextpage.html'; // กลับไปหน้า main
 }
 </script>
 
