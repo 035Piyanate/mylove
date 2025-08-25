@@ -7,15 +7,31 @@
     body {
       font-family: 'Kanit', sans-serif;
       background: linear-gradient(135deg, #ffe4f2, #fff0f5, #fdf6f9);
-      text-align: center;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
       margin: 0;
-      padding: 40px 20px;
+      padding: 20px;
+    }
+
+    /* กล่องหลัก */
+    .main-card {
+      background: #fff;
+      border-radius: 25px;
+      box-shadow: 0 12px 35px rgba(255, 105, 180, 0.25),
+                  inset 0 3px 6px rgba(255,255,255,0.6);
+      padding: 40px 30px;
+      max-width: 800px;
+      width: 100%;
+      text-align: center;
+      animation: fadeIn 1s ease;
     }
 
     h1 {
       color: #d147a3;
-      font-size: 26px;
-      margin-bottom: 20px;
+      font-size: 28px;
+      margin-bottom: 30px;
       text-shadow: 2px 2px 6px rgba(255, 182, 193, 0.6);
     }
 
@@ -23,8 +39,9 @@
       display: flex;
       justify-content: center;
       align-items: flex-start;
-      gap: 50px;
+      gap: 40px;
       flex-wrap: wrap;
+      margin-bottom: 30px;
     }
 
     .record-container {
@@ -36,7 +53,7 @@
       background: linear-gradient(145deg, #ffd6eb, #ffeaf4);
       box-shadow: 0 10px 25px rgba(255, 182, 193, 0.5),
                   inset 0 5px 10px rgba(255,255,255,0.8);
-      transition: transform 0.3s ease;
+      transition: transform 0.1s ease;
     }
 
     .record-container:hover {
@@ -60,28 +77,25 @@
 
     /* กล่องข้อความ */
     .message-box {
-      background: #fff;
+      background: #fff8fb;
       border-radius: 20px;
-      padding: 20px;
-      box-shadow: 0 8px 20px rgba(255, 192, 203, 0.5);
-      max-width: 320px;
+      padding: 20px 25px;
+      box-shadow: 0 6px 15px rgba(255, 192, 203, 0.5),
+                  inset 0 3px 8px rgba(255,255,255,0.6);
+      max-width: 380px;
       font-size: 18px;
-      color: #333;
-      line-height: 1.6;
+      color: #444;
+      line-height: 1.7;
       display: none; /* เริ่มต้นซ่อน */
       animation: fadeIn 0.8s ease;
-    }
-
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
+      text-align: left;
     }
 
     /* ปุ่มกลับหน้าแรก */
     .home-btn {
       display: inline-block;
-      margin-top: 40px;
-      padding: 12px 24px;
+      margin-top: 20px;
+      padding: 14px 30px;
       background: linear-gradient(135deg, #ff9ec4, #ffb6d5);
       color: white;
       font-size: 18px;
@@ -100,37 +114,46 @@
       box-shadow: 0 8px 20px rgba(255, 105, 180, 0.7);
     }
 
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
     /* Responsive */
     @media (max-width: 768px) {
       .container {
         flex-direction: column;
-        gap: 30px;
+        gap: 25px;
       }
     }
   </style>
 </head>
 <body>
 
-  <h1>💖 ขอบคุณที่อยู่ด้วยกันจนถึงวันนี้นะ 💖</h1>
+  <div class="main-card">
+    <h1>💖 ขอบคุณที่อยู่ด้วยกันจนถึงวันนี้นะ 💖</h1>
 
-  <div class="container">
-    <!-- แผ่นเสียง -->
-    <div class="record-container" id="recordContainer">
-      <img src="record.png" alt="แผ่นเสียง" class="record" id="record">
+    <div class="container">
+      <!-- แผ่นเสียง -->
+      <div class="record-container" id="recordContainer">
+        <img src="img/record.png" alt="แผ่นเสียง" class="record" id="record">
+      </div>
+
+      <!-- กล่องข้อความ -->
+      <div class="message-box" id="messageBox">
+        <p>
+         อะแอ่ม… กว่าจะถึงวันนี้ เราผ่านอะไรมาด้วยกันเยอะเลย  
+ทุกวันยังเหมือนวันแรกที่ได้เจอ 💕  
+ดีใจที่มีที่รักอยู่ข้างๆเค้าเสมอมา 🌸  
+สุขสันต์วันครบรอบ 3 น๊าา 🎉  
+อยู่เป็นเบ๊ ป๊ะป๋า เจ่เจ้ น้องเจ ที่รัก เค้าไปนานๆนะคะ 🫶
+        </p>
+      </div>
     </div>
 
-    <!-- กล่องข้อความ -->
-    <div class="message-box" id="messageBox">
-      <p>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit.  
-        Vivamus vel libero at nunc ullamcorper posuere.  
-        Sed vel turpis eget orci malesuada pharetra.  
-      </p>
-    </div>
+    <!-- ปุ่มกลับหน้าแรก -->
+    <a href="nextpage.html" class="home-btn">🏠 กลับหน้าแรก</a>
   </div>
-
-  <!-- ปุ่มกลับหน้าแรก -->
-  <a href="nextpage.html" class="home-btn">🏠 กลับหน้าแรก</a>
 
   <!-- เพลง -->
   <audio id="audio" src="your-music.mp3"></audio>
