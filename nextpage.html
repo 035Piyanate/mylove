@@ -106,31 +106,55 @@ h1 {
   display: none;
   justify-content: center;
   align-items: center;
-  flex-wrap: wrap;
   padding: 20px;
   overflow-y: auto;
 }
 
-.overlay img {
-  max-width: 180px;
-  max-height: 180px;
-  margin: 10px;
-  border-radius: 15px;
+.overlay-card {
+  background: #fff0f5;
+  border-radius: 25px;
+  padding: 20px;
+  max-width: 800px;
+  width: 90%;
+  box-shadow: 0 12px 35px rgba(255,105,180,0.25),
+              inset 0 3px 10px rgba(255,255,255,0.6);
+  text-align: center;
+  animation: fadeIn 0.5s ease;
+}
+
+/* Grid สำหรับรูป 12 รูป */
+.overlay-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 15px;
+  justify-items: center;
+  align-items: center;
+}
+
+/* รูปใน overlay */
+.overlay-grid img {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 20px;
   box-shadow: 0 8px 25px rgba(255,20,147,0.4);
-  transition: transform 0.2s;
+  transition: transform 0.3s, box-shadow 0.3s;
 }
 
-.overlay img:hover {
-  transform: scale(1.05);
+.overlay-grid img:hover {
+  transform: scale(1.1);
+  box-shadow: 0 12px 30px rgba(255,20,147,0.5);
 }
 
+/* ปุ่มปิด */
 .overlay .close-btn {
   width: 100%;
   text-align: right;
-  color: white;
+  color: #d147a3;
   font-size: 28px;
   cursor: pointer;
-  margin-bottom: 10px;
+  margin-bottom: 15px;
+  font-weight: bold;
 }
 
 /* Responsive */
@@ -161,9 +185,23 @@ h1 {
   <div id="timeTogether">--</div>
 
   <div class="button-row">
-    <button style="background-image:url('img/timeline1.jpg')" onclick="openOverlay(['img/a1m1.JPG','img/a1m2.JPG','img/a1m3.JPG','img/a1m4.JPG','img/a1m5.png','img/a1m6.png','img/a1m7.png','img/a1m8.png'])"></button>
-    <button style="background-image:url('img/Timeline2.jpg')" onclick="openOverlay(['img4.jpg','img5.jpg','img6.jpg'])"></button>
-    <button style="background-image:url('img/timeline3.png')" onclick="openOverlay(['img7.jpg','img8.jpg','img9.jpg'])"></button>
+    <button style="background-image:url('img/timeline1.jpg')" onclick="openOverlay([
+      'img/am/a1m1.JPG','img/am/a1m2.JPG','img/am/a1m3.JPG','img/am/a1m4.jpg',
+      'img/am/a1m5.png','img/am/a1m6.png','img/am/a1m7.png','img/am/a1m8.png',
+      'img/am/a1m9.JPG','img/am/a1m10.JPG','img/am/a1m11.JPG','img/am/a1m12.JPG'
+    ])"></button>
+
+    <button style="background-image:url('img/Timeline2.jpg')" onclick="openOverlay([
+      'img/bm/bm1.PNG','img/bm/bm2.png','img/bm/bm3.png','img/bm/bm4.png',
+      'img/bm/bm5.jpg','img/bm/bm6.JPG','img/bm/bm7.PNG','img/bm/bm8.PNG',
+      'img/bm/bm9.PNG','img/bm/bm10.PNG','img/bm/bm11.png','img/bm/bm12.png'
+    ])"></button>
+
+    <button style="background-image:url('img/timeline3.png')" onclick="openOverlay([
+       'img/cm/cm1.jpg','img/cm/cm2.jpg','img/cm/cm3.JPG','img/cm/cm4.png',
+      'img/cm/cm5.JPG','img/cm/cm6.png','img/cm/cm7.png','img/cm/cm8.JPG',
+      'img/cm/cm9.png','img/cm/cm10.png','img/cm/cm11.png','img/cm/cm12.png'
+    ])"></button>
   </div>
 
   <button id="storyButton" onclick="goStory()">ไปต่อ 💖</button>
@@ -171,17 +209,19 @@ h1 {
 
 <!-- Pop-up overlay -->
 <div id="overlay" class="overlay">
-  <div class="close-btn" onclick="closeOverlay()">✖</div>
-  <div id="overlayContent"></div>
+  <div class="overlay-card">
+    <div class="close-btn" onclick="closeOverlay()">✖</div>
+    <div id="overlayContent" class="overlay-grid"></div>
+  </div>
 </div>
 
 <script>
 // เวลาที่คบกัน
-const startDate = new Date(2022, 8, 9, 0, 0, 0); // เดือนนับ 0 = Jan, Sep = 8
+const startDate = new Date(2022, 8, 9, 0, 0, 0); // เดือนนับ 0 = Jan
 
 function updateTime() {
   const now = new Date();
-  let diff = now - startDate; // millisecond
+  let diff = now - startDate;
 
   const sec = Math.floor(diff/1000);
   const min = Math.floor(sec/60);
@@ -196,7 +236,7 @@ function updateTime() {
   const seconds = sec % 60;
 
   document.getElementById('timeTogether').innerText =
-  `${years} ปี ${months} เดือน ${days} วัน ${hours} ชั่วโมง ${minutes} นาที ${seconds} วินาที`;
+    `${years} ปี ${months} เดือน ${days} วัน ${hours} ชั่วโมง ${minutes} นาที ${seconds} วินาที`;
 }
 
 setInterval(updateTime, 1000);
