@@ -2,9 +2,9 @@
 <html lang="th">
 <head>
 <meta charset="UTF-8">
-<title>Main Page 💕</title>
+<title>💕 เวลาที่เราได้คบกัน 💕</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link href="https://fonts.googleapis.com/css2?family=Kanit:wght@400;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Kanit:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
 body {
   font-family: 'Kanit', sans-serif;
@@ -15,39 +15,43 @@ body {
   min-height: 100vh;
   margin: 0;
   padding: 20px;
+  overflow-x: hidden;
+  position: relative;
 }
 
 /* กล่องหลัก */
 .main-card {
   background: #fff0f5;
-  border-radius: 25px;
-  box-shadow: 0 12px 35px rgba(255,105,180,0.25),
-              inset 0 3px 10px rgba(255,255,255,0.6);
-  padding: 30px 25px;
-  max-width: 500px;
+  border-radius: 30px;
+  box-shadow: 0 15px 40px rgba(255,105,180,0.25),
+              inset 0 3px 12px rgba(255,255,255,0.6);
+  padding: 35px 30px;
+  max-width: 520px;
   width: 100%;
   text-align: center;
+  position: relative;
+  animation: popIn 0.6s ease;
 }
 
 /* หัวข้อ */
 h1 {
   color: #d147a3;
-  font-size: 28px;
+  font-size: 30px;
   margin-bottom: 20px;
-  text-shadow: 1px 1px 2px #fff;
+  text-shadow: 2px 2px 4px #fff;
 }
 
 /* ตัวเลขเวลาที่คบกัน */
 #timeTogether {
   font-size: 20px;
   margin: 10px 0 25px 0;
-  color: #333;
+  color: #b23a80;
   background: #fff0f5;
-  padding: 12px 20px;
-  border-radius: 20px;
-  box-shadow: 0 8px 20px rgba(255,20,147,0.2);
-  text-align: center;
-  font-weight: 500;
+  padding: 14px 20px;
+  border-radius: 25px;
+  box-shadow: 0 10px 25px rgba(255,20,147,0.2);
+  font-weight: 600;
+  animation: fadeIn 1s ease;
 }
 
 /* ปุ่มรูปภาพ */
@@ -60,38 +64,38 @@ h1 {
 }
 
 .button-row button {
-  width: 90px;
-  height: 90px;
+  width: 95px;
+  height: 95px;
   border: none;
-  border-radius: 15px;
+  border-radius: 20px;
   cursor: pointer;
   background-size: cover;
   background-position: center;
-  box-shadow: 0 8px 20px rgba(255,20,147,0.2);
-  transition: transform 0.2s, box-shadow 0.3s;
+  box-shadow: 0 10px 25px rgba(255,20,147,0.3);
+  transition: transform 0.3s, box-shadow 0.3s;
 }
 
 .button-row button:hover {
-  transform: scale(1.1);
-  box-shadow: 0 12px 30px rgba(255,20,147,0.4);
+  transform: scale(1.15) rotate(-3deg);
+  box-shadow: 0 15px 35px rgba(255,20,147,0.5);
 }
 
 /* ปุ่มไป Story */
 #storyButton {
-  padding: 12px 25px;
+  padding: 14px 30px;
   font-size: 18px;
   border: none;
-  border-radius: 20px;
+  border-radius: 25px;
   background: linear-gradient(145deg,#ff80bf,#ff4da6);
   color: white;
   cursor: pointer;
   font-weight: bold;
-  box-shadow: 0 8px 25px rgba(255,20,147,0.3);
+  box-shadow: 0 10px 30px rgba(255,20,147,0.3);
   transition: transform 0.2s, background 0.3s;
 }
 
 #storyButton:hover {
-  transform: scale(1.05);
+  transform: scale(1.1) rotate(-2deg);
   background: linear-gradient(145deg,#ff99cc,#ff66b2);
 }
 
@@ -102,48 +106,59 @@ h1 {
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0,0,0,0.7);
+  background: rgba(0,0,0,0.75);
   display: none;
   justify-content: center;
   align-items: center;
   padding: 20px;
   overflow-y: auto;
+  z-index: 999;
 }
 
 .overlay-card {
   background: #fff0f5;
   border-radius: 25px;
-  padding: 20px;
-  max-width: 800px;
+  padding: 25px;
+  max-width: 850px;
   width: 90%;
-  box-shadow: 0 12px 35px rgba(255,105,180,0.25),
-              inset 0 3px 10px rgba(255,255,255,0.6);
+  box-shadow: 0 15px 40px rgba(255,105,180,0.25),
+              inset 0 3px 12px rgba(255,255,255,0.6);
   text-align: center;
-  animation: fadeIn 0.5s ease;
+  animation: popIn 0.5s ease;
 }
 
-/* Grid สำหรับรูป 12 รูป */
+/* Grid สำหรับรูป */
 .overlay-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-  gap: 15px;
+  gap: 18px;
   justify-items: center;
   align-items: center;
 }
 
-/* รูปใน overlay */
 .overlay-grid img {
-  width: 100px;
-  height: 100px;
+  width: 110px;
+  height: 110px;
   object-fit: cover;
-  border-radius: 20px;
-  box-shadow: 0 8px 25px rgba(255,20,147,0.4);
+  border-radius: 25px;
+  box-shadow: 0 10px 30px rgba(255,20,147,0.5);
   transition: transform 0.3s, box-shadow 0.3s;
 }
 
 .overlay-grid img:hover {
-  transform: scale(1.1);
-  box-shadow: 0 12px 30px rgba(255,20,147,0.5);
+  transform: scale(1.15) rotate(-5deg);
+  box-shadow: 0 15px 40px rgba(255,20,147,0.6);
+}
+
+/* ข้อความเมื่อคลิกรูป */
+#popupMessage {
+  margin-top: 15px;
+  font-size: 18px;
+  color: #d147a3;
+  font-weight: 600;
+  min-height: 24px;
+  transition: opacity 0.3s;
+  opacity: 0;
 }
 
 /* ปุ่มปิด */
@@ -151,30 +166,43 @@ h1 {
   width: 100%;
   text-align: right;
   color: #d147a3;
-  font-size: 28px;
+  font-size: 30px;
   cursor: pointer;
-  margin-bottom: 15px;
+  margin-bottom: 20px;
   font-weight: bold;
 }
 
 /* Responsive */
 @media (max-width: 500px) {
-  #timeTogether {
-    font-size: 16px;
-    padding: 10px 15px;
-  }
-  .button-row {
-    gap: 10px;
-  }
-  .button-row button {
-    width: 70px;
-    height: 70px;
-  }
-  #storyButton {
-    width: 100%;
-    font-size: 16px;
-    padding: 12px 0;
-  }
+  #timeTogether { font-size: 16px; padding: 12px 16px; }
+  .button-row { gap: 10px; }
+  .button-row button { width: 70px; height: 70px; }
+  #storyButton { width: 100%; font-size: 16px; padding: 12px 0; }
+}
+
+/* Animations */
+@keyframes popIn {
+  0% { transform: scale(0.8); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+@keyframes fadeIn {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+/* Floating hearts */
+.heart {
+  position: absolute;
+  color: #ff4da6;
+  font-size: 20px;
+  animation: floatUp 3s linear infinite;
+  pointer-events: none;
+}
+
+@keyframes floatUp {
+  0% { transform: translateY(0) scale(1); opacity: 1; }
+  100% { transform: translateY(-200px) scale(1.3); opacity: 0; }
 }
 </style>
 </head>
@@ -185,23 +213,20 @@ h1 {
   <div id="timeTogether">--</div>
 
   <div class="button-row">
-    <button style="background-image:url('img/timeline1.jpg')" onclick="openOverlay([
-      'img/am/a1m1.JPG','img/am/a1m2.JPG','img/am/a1m3.JPG','img/am/a1m4.jpg',
-      'img/am/a1m5.png','img/am/a1m6.png','img/am/a1m7.png','img/am/a1m8.png',
-      'img/am/a1m9.JPG','img/am/a1m10.JPG','img/am/a1m11.JPG','img/am/a1m12.JPG'
-    ])"></button>
+    <button style="background-image:url('img/timeline1.jpg')" onclick="openOverlay(
+      ['img/am/a1m1.JPG','img/am/a1m2.JPG','img/am/a1m3.JPG','img/am/a1m4.jpg','img/am/a1m5.png','img/am/a1m6.png','img/am/a1m7.png','img/am/a1m8.png','img/am/a1m9.JPG','img/am/a1m10.JPG','img/am/a1m11.JPG','img/am/a1m12.JPG'],
+      ['คิดถึงตอนนี้จัง 💖','น่ารักมากเลย 😘','จำได้มั้ยวันนั้น 😍','ยิ้มแบบนี้น่ารักสุดๆ 🥰','รักนะ 💕','หวานจนเขิน 😳','โอ้โห น่ารักเกิ๊น 😚','โมเมนต์นี้ฟินสุด 💝','นึกถึงตอนนั้นแล้วยิ้ม 😄','รักแกทุกวันเลย 💗','น่ารักจนใจละลาย 😍','ฟรุ้งฟริ้งที่สุด 💕']
+    )"></button>
 
-    <button style="background-image:url('img/Timeline2.jpg')" onclick="openOverlay([
-      'img/bm/bm1.PNG','img/bm/bm2.png','img/bm/bm3.png','img/bm/bm4.png',
-      'img/bm/bm5.jpg','img/bm/bm6.JPG','img/bm/bm7.PNG','img/bm/bm8.PNG',
-      'img/bm/bm9.PNG','img/bm/bm10.PNG','img/bm/bm11.png','img/bm/bm12.png'
-    ])"></button>
+    <button style="background-image:url('img/Timeline2.jpg')" onclick="openOverlay(
+      ['img/bm/bm1.PNG','img/bm/bm2.png','img/bm/bm3.png','img/bm/bm4.png','img/bm/bm5.jpg','img/bm/bm6.JPG','img/bm/bm7.PNG','img/bm/bm8.PNG','img/bm/bm9.PNG','img/bm/bm10.PNG','img/bm/bm11.png','img/bm/bm12.png'],
+      ['คิดถึงวันนั้นสุด 💗','หวานใจที่สุด 😘','สนุกกันมากเลย 😍','ยิ้มให้กันทุกวัน 🥰','น่ารักจนใจละลาย 💕','โมเมนต์ดีๆ 😳','รักแกทุกเวลา 😚','คิดถึงทุกครั้ง 💝','หัวใจพองโต 😄','แฟนตลอดไป 💗','ฟรุ้งฟริ้งสุดๆ 😍','น่ารักเกิ๊น 💕']
+    )"></button>
 
-    <button style="background-image:url('img/timeline3.png')" onclick="openOverlay([
-       'img/cm/cm1.jpg','img/cm/cm2.jpg','img/cm/cm3.JPG','img/cm/cm4.png',
-      'img/cm/cm5.JPG','img/cm/cm6.png','img/cm/cm7.png','img/cm/cm8.JPG',
-      'img/cm/cm9.png','img/cm/cm10.png','img/cm/cm11.png','img/cm/cm12.png'
-    ])"></button>
+    <button style="background-image:url('img/timeline3.png')" onclick="openOverlay(
+      ['img/cm/cm1.jpg','img/cm/cm2.jpg','img/cm/cm3.JPG','img/cm/cm4.png','img/cm/cm5.JPG','img/cm/cm6.png','img/cm/cm7.png','img/cm/cm8.JPG','img/cm/cm9.png','img/cm/cm10.png','img/cm/cm11.png','img/cm/cm12.png'],
+      ['รักทุกโมเมนต์ 💖','น่ารักใจละลาย 😘','จำได้มั้ยตอนนั้น 😍','หัวใจพองโต 🥰','คิดถึงจัง 💕','ฟินสุด ๆ 😳','รักที่สุด 😚','โมเมนต์นี้ดี 💝','น่ารักสุด ๆ 😄','หวานใจทุกวัน 💗','ฟรุ้งฟริ้งเกิน 😍','สุดน่ารัก 💕']
+    )"></button>
   </div>
 
   <button id="storyButton" onclick="goStory()">ไปต่อ 💖</button>
@@ -212,12 +237,13 @@ h1 {
   <div class="overlay-card">
     <div class="close-btn" onclick="closeOverlay()">✖</div>
     <div id="overlayContent" class="overlay-grid"></div>
+    <div id="popupMessage"></div>
   </div>
 </div>
 
 <script>
 // เวลาที่คบกัน
-const startDate = new Date(2022, 8, 9, 0, 0, 0); // เดือนนับ 0 = Jan
+const startDate = new Date(2022, 8, 9, 0, 0, 0);
 
 function updateTime() {
   const now = new Date();
@@ -241,16 +267,27 @@ function updateTime() {
 
 setInterval(updateTime, 1000);
 
-// Pop-up รูป
-function openOverlay(images) {
+// Pop-up รูป + ข้อความไม่ซ้ำ
+function openOverlay(images, messages) {
   const overlay = document.getElementById('overlay');
   const content = document.getElementById('overlayContent');
+  const popupMessage = document.getElementById('popupMessage');
+
   content.innerHTML = '';
-  images.forEach(src => {
+  popupMessage.style.opacity = 0;
+
+  images.forEach((src, index) => {
     const img = document.createElement('img');
     img.src = src;
+
+    img.onclick = () => {
+      popupMessage.innerText = messages[index] || "รักนะ 💖";
+      popupMessage.style.opacity = 1;
+    };
+
     content.appendChild(img);
   });
+
   overlay.style.display = 'flex';
 }
 
@@ -258,10 +295,22 @@ function closeOverlay() {
   document.getElementById('overlay').style.display = 'none';
 }
 
-// ปุ่มไปหน้าสตอรี่
 function goStory() {
   window.location.href = 'story.html'; 
 }
+
+// สร้างหัวใจลอย
+function createHearts() {
+  const heart = document.createElement('div');
+  heart.className = 'heart';
+  heart.style.left = Math.random() * window.innerWidth + 'px';
+  heart.style.fontSize = (Math.random()*25 + 15) + 'px';
+  heart.innerHTML = '💖';
+  document.body.appendChild(heart);
+  setTimeout(() => heart.remove(), 3000);
+}
+
+setInterval(createHearts, 500);
 </script>
 
 </body>
