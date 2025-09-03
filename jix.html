@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<title>Jigsaw Game 💕</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="https://fonts.googleapis.com/css2?family=Kanit:wght@400;600&display=swap" rel="stylesheet">
+<style>
+body {
+  font-family: 'Kanit', sans-serif;
+  background: linear-gradient(135deg,#ffe6f0,#ffd6e0,#ffecf2);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  min-height: 100vh;
+}
+
+/* อิโมจิหัวใจลอย */
+@keyframes floatHearts {
+  0% { transform: translateY(0) scale(1); opacity: 1; }
+  100% { transform: translateY(-600px) scale(1.5); opacity: 0; }
+}
+.heart {
+  position: absolute;
+  font-size: 24px;
+  animation: floatHearts 4s linear infinite;
+}
+
+/* หัวข้อ */
+h1 {
+  color: #d147a3;
+  font-size: 32px;
+  margin-bottom: 25px;
+  text-shadow: 2px 2px 4px #fff;
+  text-align: center;
+}
+
+/* กล่อง puzzle */
+.puzzle-container {
+  background: rgba(255,240,245,0.9);
+  padding: 25px;
+  border-radius: 30px;
+  box-shadow: 0 15px 40px rgba(255,105,180,0.3), inset 0 0 10px rgba(255,255,255,0.5);
+  display: inline-block;
+  position: relative;
+  border: 3px dashed #ff99cc;
+}
+
+/* ตารางจิ๊กซอ */
+#puzzle {
+  display: grid;
+  grid-template-columns: repeat(3, 110px);
+  grid-template-rows: repeat(3, 110px);
+  gap: 10px;
+  margin-bottom: 25px;
+}
+
+.piece {
+  width: 110px;
+  height: 110px;
+  background-size: 330px 330px;
+  cursor: grab;
+  border-radius: 20px;
+  box-shadow: 0 5px 20px rgba(255,105,180,0.4);
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+.piece:hover {
+  transform: scale(1.12);
+  box-shadow: 0 10px 30px rgba(255,20,147,0.6);
+}
+
+/* ปุ่ม Next */
+#nextBtn {
+  padding: 14px 35px;
+  font-size: 18px;
+  border: none;
+  border-radius: 30px;
+  background: linear-gradient(145deg,#ff80bf,#ff4da6);
+  color: white;
+  cursor: not-allowed;
+  font-weight: bold;
+  box-shadow: 0 0 15px rgba(255,105,180,0.3);
+  transition: all 0.3s ease;
+}
+#nextBtn.enabled {
+  cursor: pointer;
+  box-shadow: 0 0 30px rgba(255,105,180,0.8), 0 0 40px rgba(255,182,193,0.6);
+}
+#nextBtn.enabled:hover {
+  transform: scale(1.08);
+  background: linear-gradient(145deg,#ff99cc,#ff66b2);
+}
+
+/* Glitter effect */
+@keyframes glitter {
+  0%,100% { opacity: 0; transform: scale(0); }
+  50% { opacity: 1; transform: scale(1.5); }
+}
+.glitter {
+  position: absolute;
+  font-size: 20px;
+  color: #ff69b4;
+  animation: glitter 0.8s ease forwards;
+}
+
+/* Responsive */
+@media (max-width: 500px) {
+  h1 { font-size: 26px; }
+  #puzzle { grid-template-columns: repeat(3, 80px); grid-template-rows: repeat(3, 80px); gap: 6px; }
+  .piece { width: 80px; height: 80px; background-size: 240px 240px; }
+  #nextBtn { width: 90%; font-size: 16px; padding: 12px 0; }
+}
+</style>
+</head>
+<body>
+
+<h1>เกมต่อจิ๊กซอ 💖</h1>
+
+<div class="puzzle-container">
+  <div id="puzzle"></div>
+</div>
+
+<button id="nextBtn">ไปหน้าถัดไป</button>
+
+<script>
+// Hearts animation
+function createHearts() {
+  const heart = document.createElement('div');
+  heart.className = 'heart';
+  heart.style.left = Math.random()*window.innerWidth + 'px';
+  heart.style.animationDuration = (3 + Math.random()*2) + 's';
+  heart.innerText = '💖';
+  document.body.appendChild(heart);
+  setTimeout(() => document.body.removeChild(heart), 5000);
+}
+setInterval(createHearts, 500);
+
+// Puzzle setup
+const rows = 3;
+const cols = 3;
+const puzzle = document.getElementById('puzzle');
+const nextBtn = document.getElementById('nextBtn');
+const imageSrc = 'img/sea.png'; // เปลี่ยนเป็นภาพของคุณ
+
+let pieces = [];
+for (let r=0; r<rows; r++) {
+  for (let c=0; c<cols; c++) {
+    const piece = document.createElement('div');
+    piece.className = 'piece';
+    piece.style.backgroundImage = `url(${imageSrc})`;
+    piece.style.backgroundPosition = `-${c*110}px -${r*110}px`;
+    piece.dataset.correctIndex = r*cols + c;
+    pieces.push(piece);
+  }
+}
+
+// Shuffle
+pieces.sort(() => Math.random() - 0.5);
+pieces.forEach(p => puzzle.appendChild(p));
+
+// Drag and drop
+let dragSrc = null;
+pieces.forEach(piece => {
+  piece.draggable = true;
+  piece.addEventListener('dragstart', e => dragSrc = piece);
+  piece.addEventListener('dragover', e => e.preventDefault());
+  piece.addEventListener('drop', e => {
+    if(dragSrc !== piece){
+      const parent = piece.parentNode;
+      const next = piece.nextSibling === dragSrc ? piece : piece.nextSibling;
+      parent.insertBefore(dragSrc, piece);
+      parent.insertBefore(piece, next);
+      checkPuzzle();
+    }
+  });
+});
+
+// Check puzzle
+function checkPuzzle() {
+  const children = Array.from(puzzle.children);
+  let correct = true;
+  children.forEach((child, index) => {
+    if (parseInt(child.dataset.correctIndex) !== index) correct = false;
+  });
+
+  if(correct){
+    nextBtn.classList.add('enabled');
+    nextBtn.onclick = () => window.location.href='gift.html';
+
+    // Glitter hearts
+    for(let i=0;i<20;i++){
+      const g = document.createElement('div');
+      g.className = 'glitter';
+      g.style.left = Math.random()*window.innerWidth + 'px';
+      g.style.top = Math.random()*window.innerHeight + 'px';
+      g.style.fontSize = (10+Math.random()*25)+'px';
+      g.style.animationDelay = (Math.random()*1)+'s';
+      document.body.appendChild(g);
+      setTimeout(()=>document.body.removeChild(g),1200);
+    }
+
+  } else {
+    nextBtn.classList.remove('enabled');
+    nextBtn.onclick = null;
+  }
+}
+</script>
+
+</body>
+</html>

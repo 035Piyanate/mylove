@@ -89,7 +89,7 @@ button.option-btn:active {
   font-size: 18px;
   border: none;
   border-radius: 15px;
-  background: linear-gradient(145deg,#4caf50,#2e7d32);
+  background: #d1477e;
   color: white;
   cursor: pointer;
   display: none;
@@ -99,7 +99,7 @@ button.option-btn:active {
 
 #nextBtn:hover {
   transform: scale(1.05);
-  background: linear-gradient(145deg,#66bb6a,#388e3c);
+  background: #ff99cc;
 }
 
 /* Progress */
@@ -206,7 +206,7 @@ function nextQuestion() {
       loadQuestion();
     } else if(score === 5) {
       alert(`คุณได้คะแนนเต็ม! 🎉 ไปหน้าของรางวัลกันเลย 💕`);
-      window.location.href = 'gift.html';
+      window.location.href = 'jix.html';
     } else {
       alert(`คุณได้ ${score} คะแนนค่ะ 😊`);
       currentQuestion = 0;
